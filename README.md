@@ -30,6 +30,8 @@ front end for the toomuchof project (the teAmo project).
 - [Next-data-fetch-pages](https://nextjs.org/learn/basics/fetching-data-for-pages)
 - [A complete guide to react hooks](https://levelup.gitconnected.com/usetypescript-a-complete-guide-to-react-hooks-and-typescript-db1858d1fb9c)
 - [React-hooks-install-material-ui-components](https://medium.com/@pfullen.code/use-hooks-to-style-material-ui-components-34f00168aa4f)
+- [Consume RESTful API react](https://pusher.com/tutorials/consume-restful-api-react)
+- [JasonWhatmore | React fetch post request](https://jasonwatmore.com/post/2020/02/01/react-fetch-http-post-request-examples)
 
 --- 
 

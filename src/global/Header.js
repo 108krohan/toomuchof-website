@@ -4,12 +4,10 @@ import MuiContainer from '@material-ui/core/Container';
 import MuiButton from '@material-ui/core/Button';
 import MuiAppBar from '@material-ui/core/AppBar';
 import MuiToolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
 import MuiTypography from '@material-ui/core/Typography';
 import MuiTooltip from '@material-ui/core/Tooltip';
 import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import Fade from '@material-ui/core/Fade';
 import Link from "../Link";
@@ -184,7 +182,7 @@ export function Right() {
                 </MuiBox>
             </MuiTooltip>
             <MuiBox px={'1em'} />
-            <MuiButton href="/rohan" className={classes.buttonColored}>
+            <MuiButton className={classes.buttonColored} naked color="primary" variant="contained" component={Link} href="/rohan" >
                 me
             </MuiButton>
         </MuiBox>
