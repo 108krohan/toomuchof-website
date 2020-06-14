@@ -1,0 +1,17 @@
+{
+  "name": "bj2ivmo-xxhzqts",
+  "hash": "I7sKaJDLgxjtlDcONaW4b+Nu1UxFFoR7AQ/VGQwJPQY=",
+  "description": "Default Lambda@Edge for Next CloudFront distribution",
+  "memory": 512,
+  "timeout": 10,
+  "code": "/Users/rohnkum/Dropbox/billed/2020-toomuchof/toomuchof-website/.serverless_nextjs/default-lambda",
+  "shims": [],
+  "handler": "index.handler",
+  "runtime": "nodejs12.x",
+  "env": {},
+  "role": {
+    "arn": "arn:aws:iam::467721594212:role/bj2ivmo-idt6vi"
+  },
+  "arn": "arn:aws:lambda:us-east-1:467721594212:function:bj2ivmo-xxhzqts",
+  "region": "us-east-1"
+}

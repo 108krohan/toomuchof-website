@@ -10,6 +10,7 @@ Legends:
 
 |task|t-shirt size|owner|type|priority/tag|
 |:---:|---|---|---|---|
+|fix_mobile_view|L|rohnkum|fix|p0|
 |blog_system|M|rohnkum|feature|p1|
 |router|M|x|feature|p3|
 |auth_cognito|M|rohnkum|feature|p2|
@@ -18,11 +19,11 @@ Legends:
 |fix_console_errors|S|x|fix|p1|
 
 ## Tech
-- [Next.js] for server-rendered React apps
-- [Material-ui] theming
-- [React] with hooks wuhu (oops, arr!)
+- [Next.js](https://nextjs.org/) for server-rendered React apps
+- [Material-ui](https://material-ui.com/) theming
+- [React](https://reactjs.org/) with hooks wuhu (oops, arr!)
 - [React-Markdown](https://github.com/rexxars/react-markdown) for blogging with markdown
-- [AWS] simple infrastructure, coded via the AWS Cloud Development Kit.
+- [AWS](https://aws.amazon.com) simple infrastructure, coded via the AWS Cloud Development Kit.
    - Infra for backend: Api Gateway, Lambda, Dynamo
    - Infra for frontend: S3
 
@@ -34,19 +35,18 @@ Legends:
 - store: https://material-ui.com/store/
 
 ## Appendix
-- [Layout/Web-alexdevero](https://www.alexdevero.com/contact/)
-- [TodoList-Hooks](https://github.com/alexdevero/react-hooks-todo-list-app-ts/tree/master/src)
-- [Todo-hooks-react](https://blog.alexdevero.com/todo-list-app-react-hooks-typescript/)
-
-- [React-markdown](https://github.com/rexxars/react-markdown)
-- [Aws-cdk](https://github.com/aws/aws-cdk)
-- [Material-ui-styles-basics](https://material-ui.com/styles/basics/)
-- [Website-style-blog-ui](https://linuxize.com/post/bash-comments/)
-- [Next-data-fetch-pages](https://nextjs.org/learn/basics/fetching-data-for-pages)
-- [A complete guide to react hooks](https://levelup.gitconnected.com/usetypescript-a-complete-guide-to-react-hooks-and-typescript-db1858d1fb9c)
-- [React-hooks-install-material-ui-components](https://medium.com/@pfullen.code/use-hooks-to-style-material-ui-components-34f00168aa4f)
-- [Consume RESTful API react](https://pusher.com/tutorials/consume-restful-api-react)
+- [AlexDevero | Todo-hooks-react](https://blog.alexdevero.com/todo-list-app-react-hooks-typescript/)
+- [Github/rexxars | React-markdown](https://github.com/rexxars/react-markdown)
+- [AWS | AWS Cloud Development Kit](https://github.com/aws/aws-cdk)
+- [Material UI | Material UI style basics](https://material-ui.com/styles/basics/)
+- [Linuxize | Idea: Website blog style](https://linuxize.com/post/bash-comments/)
+- [AlexDevero | Idea: Layout/Web](https://www.alexdevero.com/contact/)
+- [Nextjs | fetch data](https://nextjs.org/learn/basics/fetching-data-for-pages)
+- [Git connected | A complete guide to react hooks](https://levelup.gitconnected.com/usetypescript-a-complete-guide-to-react-hooks-and-typescript-db1858d1fb9c)
+- [Medium/Pfullen.code | React-hooks-install-material-ui-components](https://medium.com/@pfullen.code/use-hooks-to-style-material-ui-components-34f00168aa4f)
+- [Pusher | Consume RESTful API react](https://pusher.com/tutorials/consume-restful-api-react)
 - [JasonWhatmore | React fetch post request](https://jasonwatmore.com/post/2020/02/01/react-fetch-http-post-request-examples)
+- [Serverless | Serverless next.js](https://www.serverless.com/blog/serverless-nextjs/)
 
 --- 
 

@@ -100,7 +100,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'stretch',
     },
 }));
-export default function Index() {
+export default function Index({counterValue}) {
     const classes = useStyles();
     return (
         <Layout>
@@ -111,7 +111,7 @@ export default function Index() {
                 <MuiGrid item sm={4} xs={12}>
                     <MuiGrid container spacing={1} direction="column">
                         <MuiGrid item xs={12}>
-                            <Ringer />
+                            <Ringer counterValue={counterValue}/>
                         </MuiGrid>
                         <MuiGrid item xs={12}>
                             <Feedback/>
@@ -216,6 +216,9 @@ export function Hi() {
                         </MuiBox>
                         <MuiTypography className={classes.typography} paragraph variant="body1">
                             <p>
+                                <strong>NOTE for phone users</strong> Request to please make use of "Desktop site" chrome setting for now. The coder is a novice nord lord in a mobile first world.
+                            </p>
+                            <p>
                                 <strong>kyun toomuchof?</strong> kyunki someone says "nearly everything's interesting if you go into it deeply enough."
                             </p>
                             <strong>kya hai plan?</strong> plan is to have some of the following in action real soon:
@@ -307,8 +310,8 @@ export function Hi() {
         </MuiContainer>
     );
 }
-export function Ringer() {
-    const [counter, setCounter] = useState(0);
+export function Ringer(props) {
+    const [counter, setCounter] = useState(props.counterValue);
     const [increment, setIncrement] = useState(0);
     const classes = useStyles();
     useEffect(() => {
@@ -390,11 +393,10 @@ export function Feedback() {
         </MuiContainer>
     );
 }
-//
-// export async function getStaticProps(context) {
-//     const res = await fetch('https://wu9tlfqaf8.execute-api.ap-south-1.amazonaws.com/prod/counter/1-frontpage-ringer');
-//     const counter = await res.json();
-//     return {
-//         props: {counterValue : counter.counterValue},
-//     }
-// }
+export async function getServerSideProps(context) {
+    const res = await fetch('https://wu9tlfqaf8.execute-api.ap-south-1.amazonaws.com/prod/counter/1-frontpage-ringer');
+    const counterValue = await res.json();
+    return {
+        props: {counterValue},
+    }
+}

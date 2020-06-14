@@ -1,0 +1,13 @@
+{
+  "region": "us-east-1",
+  "privateZone": false,
+  "domain": "toomuchof.me",
+  "subdomains": [
+    {
+      "domain": "www.toomuchof.me",
+      "distributionId": "E16Z9NRDTMQ3KQ",
+      "url": "https://d1mp8c9wa5iqbb.cloudfront.net",
+      "type": "awsCloudFront"
+    }
+  ]
+}

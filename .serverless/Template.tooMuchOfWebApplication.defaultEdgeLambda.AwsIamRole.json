@@ -1,0 +1,12 @@
+{
+  "name": "bj2ivmo-idt6vi",
+  "arn": "arn:aws:iam::467721594212:role/bj2ivmo-idt6vi",
+  "service": [
+    "edgelambda.amazonaws.com",
+    "lambda.amazonaws.com"
+  ],
+  "policy": {
+    "arn": "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+  },
+  "region": "us-east-1"
+}
