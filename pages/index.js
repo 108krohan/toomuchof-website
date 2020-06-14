@@ -10,10 +10,34 @@ import MuiFab from '@material-ui/core/Fab';
 import MuiTextField from '@material-ui/core/TextField';
 import MuiLink from '@material-ui/core/Link';
 import Layout from '../src/global/Layout';
-import MuiIconButton from '@material-ui/core/IconButton';
+import SendIcon from '@material-ui/icons/Send';
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
+import MuiButton from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import { Alert, AlertTitle } from '@material-ui/lab';
+import BeachAccessIcon from '@material-ui/icons/BeachAccess';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import Rating from '@material-ui/lab/Rating';
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
-import FormControl from '@material-ui/core/FormControl';
+import Slide from '@material-ui/core/Slide';
 import { makeStyles } from '@material-ui/core/styles';
+const StyledRating = withStyles({
+    iconFilled: {
+        color: '#ff6d75',
+    },
+    iconHover: {
+        color: '#ff3d47',
+    },
+})(Rating);
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
 const useStyles = makeStyles((theme) => ({
     gridContainer: {
         display: 'flex',
@@ -43,6 +67,13 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
         alignItems: 'center',
         paddingX: 2,
+    },
+    submitTile: {
+        display: 'grid',
+        gridAutoFlow: 'column',
+        gridTemplateColumns: '20% 45% 15%',
+        gridColumnGap: '10%',
+        alignItems: 'end',
     },
     left: {
         display: 'flex',
@@ -92,20 +123,81 @@ export default function Index() {
     );
 }
 export function Hi() {
+    const [name, setName] = useState("");
+    const [hiMessage, setHiMessage] = useState("");
+    const [contact, setContact] = useState("");
+    const [selectedDate, setSelectedDate] = React.useState(new Date('1995-10-25T21:11:54'));
+    const [alertMessage, setAlertMessage] = useState("");
+    const [showDialog, setShowDialog] = useState(false);
     const classes = useStyles();
+    const handleSubmit = (event) => {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                'name': name,
+                'dob':selectedDate,
+                'message': hiMessage,
+                'contact': contact,
+            })
+        };
+        fetch('https://p0upowqk32.execute-api.ap-south-1.amazonaws.com/prod/customer',
+            requestOptions)
+            .then(response => alert(response));
+        event.preventDefault();
+        // If you see this list and do not see your name,  :P
+        let asliGochiz = ["salil", "kapil", "deeksha", "ankit", "rathi", "ravi", "abhinav", "bhaia", "pragya", "pogo", "bhushan"];
+        let pariwar = ["ronit", "ashu", "yadvendra", "kanishk", "meethi", "taurooshya", "ajeet", "pushpa"];
+        let collegeFriends = ["mundada", "akshat", "vishal", "indrajeet", "himanshu", "siddharth", "aditya", "harsh", "bauji", "shashank", "tapan", "chetan", "yog", "ashutosh", "dev", "mehul", "suhaib", "rishabh"];
+        let schoolFriends = ["rohit", "kajol", "savi", "asad", "aman", "kushagra", "saurabh", "shubham", "aastha", "janvi", "harshita"];
+        let officeFolk = ["arun", "vaibhav", "vikash", "raj", "vandita", "rishu", "anurag", "krishna"];
+        let searchStrings = name.split(" ");
+        searchStrings.forEach((onestr) => {
+            // search value in all above guys, and present prepare alert message.
+            let str = onestr.toLowerCase();
+            if(asliGochiz.includes(str)) {
+                setAlertMessage("Thank you! And Wuhuuuuuuuuu " + name + "! Keep being awesome asli gochiz!");
+            }
+            else if(pariwar.includes(str)) {
+                setAlertMessage("Hello and welcome " + name + "! Now, a digital home to call our own.");
+            }
+            else if(str === "kamna") {
+                setAlertMessage("Look at the stars, look how they shine for you! :-) All the best for JAM preparation, and always here for you any samay! ^__^");
+            }
+            else if(collegeFriends.includes(str)) {
+                setAlertMessage("Hiiiiiiii dost! Here I'm thinking when " + name + "would show up! How's it going? Let's ketchup sometime real soon!");
+            }
+            else if(schoolFriends.includes(str)) {
+                setAlertMessage ("Hello old friend. :-) I'll be sure to not forget your birthday this time for sure :P :-)");
+            }
+            else if(officeFolk.includes(str)) {
+                setAlertMessage("Hi dude! Glad hearing from you! Your feedback has always been super helpful in office, and now here too. Thanks for chipping in!");
+            }
+            else {
+                setAlertMessage("Thank you for checking in!");
+            }
+        });
+        setShowDialog(true);
+    };
+    const handleClose = () => {
+        setShowDialog(false);
+    };
     return (
         <MuiContainer className={classes.left}>
             <MuiCard variant="outlined">
                 <MuiCardContent >
-                    <FormControl>
+                    <form onSubmit={handleSubmit}>
                         <MuiTypography variant="h2" className={classes.title} gutterBottom>
                             hello,
                             <MuiBox px={3} className={classes.titleInput}>
                                 <MuiTextField
                                     id="input-name"
+                                    required
                                     label="&nbsp;君の名は。| &nbsp;&nbsp;your name"
                                     variant="outlined"
                                     align="center"
+                                    value={name}
+                                    onChange={(event) => setName(event.target.value)}
                                 />
                             </MuiBox>
                         </MuiTypography>
@@ -115,14 +207,18 @@ export function Hi() {
                                 label="how are you doing? how is everything? kaise? :D"
                                 variant="outlined"
                                 size="small"
+                                multiline
+                                rowsMax={3}
                                 fullWidth
+                                value={hiMessage}
+                                onChange={(event) => setHiMessage(event.target.value)}
                             />
                         </MuiBox>
-                        <MuiTypography className={classes.typography} paragraph variant="subtitle">
+                        <MuiTypography className={classes.typography} paragraph variant="body1">
                             <p>
-                                <strong>kyun toomuchof?</strong> to learn by doing, kind of. doing what? travel and tech.
+                                <strong>kyun toomuchof?</strong> kyunki someone says "nearly everything's interesting if you go into it deeply enough."
                             </p>
-                            <strong>plan kya hai?</strong> plan is to have some of the following in action real soon:
+                            <strong>kya hai plan?</strong> plan is to have some of the following in action real soon:
                             <ul>
                                 <li>
                                     <strong>you</strong>, an invite only living-room for exclusive content.
@@ -132,41 +228,81 @@ export function Hi() {
                                     <strong>website</strong> authentication, markdown-blog, search (I'm thinking AWS Kendra, idk), etc.
                                 </li>
                                 <li>
-                                    <strong>simple apps</strong> for online meetings, weather info, to-do list, etc. as of now.
+                                    <strong>simple apps</strong> for chat bots, weather info, to-do list, AWS hands on, etc. as of now.
                                 </li>
                                 <li>
-                                    <strong>software notes</strong> on design, DSA, and AWS | Expect deep dives and explain-like-i'm-fives!
+                                    <strong>software excellence</strong> on design, DSA, and AWS | Expect deep dives and explain-like-i'm-fives!
                                 </li>
                                 <li>
                                     <strong>solo travel logs </strong> to ∞ and beyond, for example: trek to lauterbrunnen from interlaken..
-                                    <p align="center">"knowing all of this <br />
+                                    <div align="center">"knowing all of this <br />
                                         just don't make a difference,<br />
                                         i'm just talking shit <br />
-                                        to the ones who'll listen."</p>
-                                    <p>~ <MuiLink href="https://www.youtube.com/watch?v=tQjsAJhsSw8">Posty</MuiLink></p>
+                                        to the ones who'll listen."</div>
+                                    <div>~ <MuiLink href="https://www.youtube.com/watch?v=tQjsAJhsSw8">Posty</MuiLink></div>
                                 </li>
                             </ul>
-                            <strong>sales peach</strong> i've nothing to sell, nothing to convince you to do.
-                            i don't even want the 'just share interesting stuff' bs.
-                            (definitely not the sharing kind, this one.)
-                            and definitely not a regular go-to front end guy with a lot of web XP.
-                            <br/>
-                            so this is just me running, tripping, falling w/ a bit of figuring things out on the fly. :)
-                            <br/>
+                            <BeachAccessIcon fontSize="small"/><strong>sales peach</strong>  Any day can spell an end. <MuiLink href="https://www.youtube.com/watch?v=zNOHyGP7thk">God only knows</MuiLink> what's to come. Be the next to know what's up. :)
                         </MuiTypography>
-                        <MuiTypography>
-                        <MuiBox className={classes.subtitle} >
+                        <MuiBox className={classes.submitTile} >
+                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                <KeyboardDatePicker
+                                    className={classes.submitTileChild}
+                                    disableToolbar
+                                    required
+                                    variant="outlined"
+                                    format="dd/MM/yyyy"
+                                    id="input-date"
+                                    label="Birthday"
+                                    value={selectedDate}
+                                    onChange={(date) => setSelectedDate(date)}
+                                    KeyboardButtonProps={{
+                                        'aria-label': 'Get a hi on your birthday! :-)',
+                                    }}
+                                />
+                            </MuiPickersUtilsProvider>
                             <MuiTextField
                                 id="input-contact"
-                                label="(Optional) tell me what's up on (think Email/Phone/Insta/WhatsApp/etc.)"
+                                label="(Optional) e-mail/whatsapp/insta"
                                 variant="outlined"
                                 size="small"
-                                fullWidth
+                                value={contact}
+                                onChange={(event) => setContact(event.target.value)}
                             />
+                            <MuiButton
+                                variant="contained"
+                                color="primary"
+                                type="submit"
+                                endIcon={<SendIcon />}
+                            >
+                                Send
+                            </MuiButton>
                         </MuiBox>
-                    </MuiTypography>
-                    </FormControl>
+                    </form>
                 </MuiCardContent>
+                <Dialog
+                    open={showDialog}
+                    TransitionComponent={Transition}
+                    keepMounted
+                    onClose={handleClose}
+                    aria-labelledby="alert-dialog-slide-title"
+                    aria-describedby="alert-dialog-slide-description"
+                >
+                    <DialogTitle id="alert-dialog-slide-title">{"Save success!"}</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-slide-description">
+                            <Alert severity="success">
+                                <AlertTitle>Success</AlertTitle>
+                                {alertMessage}
+                            </Alert>
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <MuiButton onClick={handleClose} color="primary">
+                            Close
+                        </MuiButton>
+                    </DialogActions>
+                </Dialog>
             </MuiCard>
         </MuiContainer>
     );
@@ -180,30 +316,23 @@ export function Ringer() {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         };
-        fetch("https://wu9tlfqaf8.execute-api.ap-south-1.amazonaws.com/prod/counter/1-frontpage-ringer")
+        fetch("https://wu9tlfqaf8.execute-api.ap-south-1.amazonaws.com/prod/counter/1-frontpage-ringer", requestOptions)
             .then(result => result.json())
-            .then(result => {
-                setCounter(result);
-            });
+            .then(result => setCounter(result));
     }, []); // runs once because 0 dependencies mentioned explicitly.
     useEffect(() => {
         if(increment % 3 === 0) {
             const requestOptions = {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
-                body: { 'increment': 3 }
+                body: JSON.stringify({'increment': increment})
             };
             fetch('https://wu9tlfqaf8.execute-api.ap-south-1.amazonaws.com/prod/counter/1-frontpage-ringer',
                 requestOptions)
-                .then(response => response.json())
-                .then(data => console.log(data));
+                .then(setCounter(counter + increment))
+                .then(setIncrement(0));
         }
     }, [increment]);
-    // async function getInitialCounterState() {
-    //     return await fetch("https://wu9tlfqaf8.execute-api.ap-south-1.amazonaws.com/prod/counter/1-frontpage-ringer")
-    //         .then(result => result.json())
-    //         .then(response => response.counterValue).promise();
-    // }
     return (
         <MuiContainer className={classes.right}>
             <MuiCard variant="outlined">
@@ -211,8 +340,8 @@ export function Ringer() {
                     <MuiTypography className={classes.typography} variant="h2" gutterBottom>
                         ringer
                     </MuiTypography>
-                    <MuiTypography className={classes.typography} variant="subtitle" gutterBottom>
-                        simple pray bell, let's see how many decades before this guy can hit 10k
+                    <MuiTypography className={classes.typography} variant="body1" gutterBottom>
+                        simple pray bell, let's see how many decades before this guy turns 10k
                         <br/> if ever :P
                         <br/>
                         bajate raho! :P
@@ -224,9 +353,9 @@ export function Ringer() {
                         <NotificationsActiveIcon />
                     </MuiFab>
                     <MuiBox mx={3}>
-                    <MuiTypography variant="subtitle1" alignright="true">
-                        {counter + increment} pings and counting!
-                    </MuiTypography>
+                        <MuiTypography variant="subtitle1" alignright="true">
+                            {counter + increment} pings and counting!
+                        </MuiTypography>
                     </MuiBox>
                 </MuiCardActions>
             </MuiCard>
@@ -242,8 +371,17 @@ export function Feedback() {
                     <MuiTypography className={classes.typography} variant="h2" gutterBottom>
                         feedback
                     </MuiTypography>
-                    <MuiTypography className={classes.typography} variant="subtitle" gutterBottom>
-                        under construction!
+                    <MuiBox component="fieldset" mb={3} borderColor="transparent">
+                        <StyledRating
+                            name="customized-color"
+                            defaultValue={2}
+                            getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
+                            precision={1}
+                            icon={<FavoriteIcon fontSize="inherit" />}
+                        />
+                    </MuiBox>
+                    <MuiTypography>
+                        <strong>Coming soon!</strong> Transparent stats on the cardinality of 1, 2, 3, 4, and 5 hearts overtime. Dummy placeholder for now.
                     </MuiTypography>
                 </MuiCardContent>
                 <MuiCardActions disableSpacing>

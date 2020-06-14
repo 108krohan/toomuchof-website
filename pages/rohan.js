@@ -7,6 +7,7 @@ import Link from '../src/Link';
 import Layout from '../src/global/Layout';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import MuiDivider from '@material-ui/core/Divider';
 const useStyles = makeStyles((theme) => ({
     base: {
         margin: theme.spacing(6, 0, 6),
@@ -55,39 +56,47 @@ export default function Rohan() {
                              rohan
                         </Typography>
                     </MuiBox>
-                    <Typography className={classes.typography} variant="body1">
-                        wuhu! great having u here, melon. :)
-                    </Typography>
-                    <Typography className={classes.typography} variant="body1">
-                        ha! welcome to the lands of rohan!
-                    </Typography>
-                    <Typography className={classes.typography} variant="body1">
-                        wait, that mean u a rohirrim? ;)
-                    </Typography>
-                    <Typography className={classes.typography} variant="body1">
-                        mera middle earth india hai :)
-                    </Typography>
-                    <Typography className={classes.typography} variant="body1">
-                        i guess bag end hai banaras, then
-                    </Typography>
-                    <Typography className={classes.typography} variant="body1">
-                        then what's that make bits goa, boyz?
-                    </Typography>
-                    <Typography className={classes.typography} variant="body1">
-                        ok, enough with the LOTRy..
-                    </Typography>
-                    <Typography className={classes.typography} variant="body1">
-                        it's not like that's all i can think of rn
-                    </Typography>
-                    <Typography className={classes.typography} variant="body1">
-                        kidding, it is
-                    </Typography>
-                    <Typography className={classes.typography} variant="body1">
-                        and
-                    </Typography>
-                    <Typography className={classes.typography} variant="body1">
-                        ...i think you think too much of me
-                    </Typography>
+                    <MuiBox m={2}>
+                        <Typography className={classes.typography} variant="body1">
+                            wuhu! great having u here, melon. :)
+                        </Typography>
+                        <Typography className={classes.typography} variant="body1">
+                            ha! welcome to the lands of rohan!
+                        </Typography>
+                        <Typography className={classes.typography} variant="body1">
+                            wait, that mean u a rohirrim? ;)
+                        </Typography>
+                        <Typography className={classes.typography} variant="body1">
+                            mera middle earth india hai :)
+                        </Typography>
+                        <Typography className={classes.typography} variant="body1">
+                            i guess bag end hai banaras, then
+                        </Typography>
+                        <Typography className={classes.typography} variant="body1">
+                            then what's that make bits goa, boyz?
+                        </Typography>
+                        <Typography className={classes.typography} variant="body1">
+                            ok, what LOTRy is this..
+                        </Typography>
+                        <Typography className={classes.typography} variant="body1">
+                            it's not like that's all i can think of rn
+                        </Typography>
+                        <Typography className={classes.typography} variant="body1">
+                            kidding, it is
+                        </Typography>
+                        <Typography className={classes.typography} variant="body1">
+                            and
+                        </Typography>
+                        <Typography className={classes.typography} variant="body1">
+                            ...i think you think toomuchof
+                        </Typography>
+                    </MuiBox>
+                    <MuiDivider light="true" variant="middle"/>
+                    <MuiBox m={2}>
+                        <Typography className={classes.typography} variant="body1" aligncenter="true">
+                            AWS Solutions Architect Professional | GSoC '19
+                        </Typography>
+                    </MuiBox>
                 </MuiPaper>
                 <MuiButton className={classes.button} variant="contained" color="primary" component={Link} naked href="/">
                     Go to the main page

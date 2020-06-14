@@ -2,6 +2,21 @@
 
 front end for the toomuchof project (the teAmo project).
 
+## Things to do
+
+Legends:
+- p0 is highest priority, p3 is least.
+- XL is max time estimate (2 weeks), S is minimum (single day). Tasks with t-shirt estimate set as S are good first issues. `README.md` fixes are good first issues.
+
+|task|t-shirt size|owner|type|priority/tag|
+|:---:|---|---|---|---|
+|blog_system|M|rohnkum|feature|p1|
+|router|M|x|feature|p3|
+|auth_cognito|M|rohnkum|feature|p2|
+|favicon|S|x|fix|p3|
+|switch_ts|M|x|fix|p3|
+|fix_console_errors|S|x|fix|p1|
+
 ## Tech
 - [Next.js] for server-rendered React apps
 - [Material-ui] theming

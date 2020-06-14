@@ -102,7 +102,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Header() {
     const classes = useStyles();
     return (
-        <MuiContainer className={classes.root} gutterBottom>
+        <MuiContainer className={classes.root}>
             <AppBarElevationScroll >
                 <MuiAppBar className={classes.appBar} color="transparent" >
                     <MuiToolbar >

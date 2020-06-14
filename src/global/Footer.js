@@ -78,7 +78,7 @@ export function Copyright() {
                 {new Date().getFullYear()}
             </MuiTypography>
             <MuiTypography className={classes.copyright}>
-                zarori baaten: my words are my own, and in no way reflect the views of Amazon.
+                baaten zarori: my words are my own, and in no way reflect the views of my employer.
             </MuiTypography>
         </MuiContainer>
     );
