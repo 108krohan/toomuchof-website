@@ -153,7 +153,7 @@ export function Hi() {
         let asliGochiz = ["salil", "kapil", "deeksha", "ankit", "rathi", "ravi", "abhinav", "bhaia", "pragya", "pogo", "bhushan", "bhagya", "bhagyashree"];
         let pariwar = ["ronit", "ashu", "yadvendra", "kanishk", "meethi", "taurooshya", "ajeet", "pushpa", "rajendra", "akhilesh", "shruti", "shivesh"];
         let collegeFriends = ["mundada", "akshat", "vishal", "indrajeet", "himanshu", "siddharth", "aditya", "harsh", "bauji", "shashank", "tapan", "chetan", "yog", "ashutosh", "aashima", "dev", "mehul", "suhaib", "rishabh", "gyanesh", "gyani", "rathi", "shubham rathi", "kushal", "baba", "vatsal", "chcha"];
-        let schoolFriends = ["rohit", "kajol", "savi", "asad", "aman", "kushagra", "saurabh", "shubham", "aastha", "janvi", "harshita", "apoorva", "anushka", "prakritee", "nikita", "jyotsana", "avishi", "apurva", "utkarsh", "vartika", "ashish", "priya", "tanya", "namrata", "isha"];
+        let schoolFriends = ["rohit", "kajol", "savi", "asad", "aman", "kushagra", "saurabh", "shubham", "aastha", "janvi", "harshita", "apoorva", "anushka", "prakritee", "nikita", "jyotsana", "avishi", "apurva", "utkarsh", "vartika", "ashish", "priya", "tanya", "namrata", "isha", "anmol"];
         let officeFolk = ["arun", "vaibhav", "vikash", "raj", "vandita", "rishu", "divya", "anurag", "krishna", "sriharsha", "harsha"];
         let searchStrings = name.split(" ");
         let newAlertMessage = "";

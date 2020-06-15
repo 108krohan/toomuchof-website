@@ -53,11 +53,11 @@ export default function Footer() {
                     <TwitterIcon />
                 </MuiLink>
                 <MuiBox px={"1em"}></MuiBox>
-                <MuiLink href="https://linkedin.com/rohan-kumarr">
+                <MuiLink href="https://www.linkedin.com/in/rohan-kumarr/">
                     <LinkedInIcon />
                 </MuiLink>
                 <MuiBox px={"1em"}></MuiBox>
-                <MuiLink href="https://linkedin.com/rohan-kumarr">
+                <MuiLink href="https://github.com/108krohan/">
                     <GitHubIcon />
                 </MuiLink>
                 <MuiBox px={"1em"}></MuiBox>
