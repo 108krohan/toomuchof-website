@@ -11,7 +11,7 @@ import MuiTextField from '@material-ui/core/TextField';
 import MuiLink from '@material-ui/core/Link';
 import Layout from '../src/global/Layout';
 import SendIcon from '@material-ui/icons/Send';
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import MuiButton from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
@@ -61,6 +61,11 @@ const useStyles = makeStyles((theme) => ({
     },
     titleInput: {
         display: 'flex',
+        padding: theme.spacing(2),
+        flexGrow:4,
+    },
+    inputName: {
+        width: '50%',
     },
     subtitle: {
         display: 'flex',
@@ -126,14 +131,14 @@ export function Hi() {
     const [name, setName] = useState("");
     const [hiMessage, setHiMessage] = useState("");
     const [contact, setContact] = useState("");
-    const [selectedDate, setSelectedDate] = React.useState(new Date('1995-10-25T21:11:54'));
+    const [selectedDate, setSelectedDate] = React.useState(new Date('1997-12-04'));
     const [alertMessage, setAlertMessage] = useState("");
     const [showDialog, setShowDialog] = useState(false);
     const classes = useStyles();
     const handleSubmit = (event) => {
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'text/event-stream' },
             body: JSON.stringify({
                 'name': name,
                 'dob':selectedDate,
@@ -142,41 +147,44 @@ export function Hi() {
             })
         };
         fetch('https://p0upowqk32.execute-api.ap-south-1.amazonaws.com/prod/customer',
-            requestOptions)
-            .then(response => alert(response));
+            requestOptions);
         event.preventDefault();
         // If you see this list and do not see your name,  :P
-        let asliGochiz = ["salil", "kapil", "deeksha", "ankit", "rathi", "ravi", "abhinav", "bhaia", "pragya", "pogo", "bhushan"];
-        let pariwar = ["ronit", "ashu", "yadvendra", "kanishk", "meethi", "taurooshya", "ajeet", "pushpa"];
-        let collegeFriends = ["mundada", "akshat", "vishal", "indrajeet", "himanshu", "siddharth", "aditya", "harsh", "bauji", "shashank", "tapan", "chetan", "yog", "ashutosh", "dev", "mehul", "suhaib", "rishabh"];
-        let schoolFriends = ["rohit", "kajol", "savi", "asad", "aman", "kushagra", "saurabh", "shubham", "aastha", "janvi", "harshita"];
-        let officeFolk = ["arun", "vaibhav", "vikash", "raj", "vandita", "rishu", "anurag", "krishna"];
+        let asliGochiz = ["salil", "kapil", "deeksha", "ankit", "rathi", "ravi", "abhinav", "bhaia", "pragya", "pogo", "bhushan", "bhagya", "bhagyashree"];
+        let pariwar = ["ronit", "ashu", "yadvendra", "kanishk", "meethi", "taurooshya", "ajeet", "pushpa", "rajendra", "akhilesh", "shruti", "shivesh"];
+        let collegeFriends = ["mundada", "akshat", "vishal", "indrajeet", "himanshu", "siddharth", "aditya", "harsh", "bauji", "shashank", "tapan", "chetan", "yog", "ashutosh", "aashima", "dev", "mehul", "suhaib", "rishabh", "gyanesh", "gyani", "rathi", "shubham rathi", "kushal", "baba", "vatsal", "chcha"];
+        let schoolFriends = ["rohit", "kajol", "savi", "asad", "aman", "kushagra", "saurabh", "shubham", "aastha", "janvi", "harshita", "apoorva", "anushka", "prakritee", "nikita", "jyotsana", "avishi", "apurva", "utkarsh", "vartika", "ashish", "priya", "tanya", "namrata", "isha"];
+        let officeFolk = ["arun", "vaibhav", "vikash", "raj", "vandita", "rishu", "divya", "anurag", "krishna", "sriharsha", "harsha"];
         let searchStrings = name.split(" ");
+        let newAlertMessage = "";
         searchStrings.forEach((onestr) => {
             // search value in all above guys, and present prepare alert message.
             let str = onestr.toLowerCase();
-            if(asliGochiz.includes(str)) {
-                setAlertMessage("Thank you! And Wuhuuuuuuuuu " + name + "! Keep being awesome asli gochiz!");
-            }
-            else if(pariwar.includes(str)) {
-                setAlertMessage("Hello and welcome " + name + "! Now, a digital home to call our own.");
-            }
-            else if(str === "kamna") {
-                setAlertMessage("Look at the stars, look how they shine for you! :-) All the best for JAM preparation, and always here for you any samay! ^__^");
-            }
-            else if(collegeFriends.includes(str)) {
-                setAlertMessage("Hiiiiiiii dost! Here I'm thinking when " + name + "would show up! How's it going? Let's ketchup sometime real soon!");
-            }
-            else if(schoolFriends.includes(str)) {
-                setAlertMessage ("Hello old friend. :-) I'll be sure to not forget your birthday this time for sure :P :-)");
-            }
-            else if(officeFolk.includes(str)) {
-                setAlertMessage("Hi dude! Glad hearing from you! Your feedback has always been super helpful in office, and now here too. Thanks for chipping in!");
-            }
-            else {
-                setAlertMessage("Thank you for checking in!");
+            if(newAlertMessage === "" || newAlertMessage === "Thank you for checking in!") {
+                if(asliGochiz.includes(str)) {
+                    newAlertMessage = "Thank you! And Wuhuuuuuuuuu " + name + "! Keep being awesome asli gochiz!";
+                }
+                else if(pariwar.includes(str)) {
+                    newAlertMessage = "Hello and welcome " + name + "! Now, a digital home to call our own.";
+                }
+                else if(str === "kamna") {
+                    newAlertMessage = "Look at the stars, look how they shine for you! :-) All the best for JAM preparation, and always here for you any samay! ^__^";
+                }
+                else if(collegeFriends.includes(str)) {
+                    newAlertMessage = "Hiiiiiiii dost! Here I'm thinking when " + name + " would show up! How's it going? Let's ketchup sometime real soon!";
+                }
+                else if(schoolFriends.includes(str)) {
+                    newAlertMessage = "Hello " + name + " a.k.a. old friend. :-) I'll be sure to not forget your birthday this time for sure :P :-)";
+                }
+                else if(officeFolk.includes(str)) {
+                    newAlertMessage = "Hi " + " ! Glad hearing from you! Your feedback has always been super helpful in office, and now here too. Thanks for chipping in!";
+                }
+                else {
+                    newAlertMessage = "Thank you for checking in!";
+                }
             }
         });
+        setAlertMessage(newAlertMessage);
         setShowDialog(true);
     };
     const handleClose = () => {
@@ -191,11 +199,11 @@ export function Hi() {
                             hello,
                             <MuiBox px={3} className={classes.titleInput}>
                                 <MuiTextField
+                                    className={classes.inputName}
                                     id="input-name"
                                     required
                                     label="&nbsp;君の名は。| &nbsp;&nbsp;your name"
                                     variant="outlined"
-                                    align="center"
                                     value={name}
                                     onChange={(event) => setName(event.target.value)}
                                 />
@@ -204,7 +212,7 @@ export function Hi() {
                         <MuiBox className={classes.subtitle} >
                             <MuiTextField
                                 id="input-hi"
-                                label="how are you doing? how is everything? kaise? :D"
+                                label="how are you doing? got a word for me? leave a message when you go :D"
                                 variant="outlined"
                                 size="small"
                                 multiline
@@ -249,19 +257,14 @@ export function Hi() {
                         </MuiTypography>
                         <MuiBox className={classes.submitTile} >
                             <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                <KeyboardDatePicker
-                                    className={classes.submitTileChild}
+                                <DatePicker
                                     disableToolbar
                                     required
-                                    variant="outlined"
-                                    format="dd/MM/yyyy"
+                                    variant="inline"
                                     id="input-date"
                                     label="Birthday"
                                     value={selectedDate}
                                     onChange={(date) => setSelectedDate(date)}
-                                    KeyboardButtonProps={{
-                                        'aria-label': 'Get a hi on your birthday! :-)',
-                                    }}
                                 />
                             </MuiPickersUtilsProvider>
                             <MuiTextField
