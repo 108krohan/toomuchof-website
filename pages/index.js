@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import MuiTypography from '@material-ui/core/Typography';
 import MuiContainer from '@material-ui/core/Container';
 import MuiBox from '@material-ui/core/Box';
+import Box from '@material-ui/core/Box';
 import MuiGrid from '@material-ui/core/Grid';
 import MuiCard from '@material-ui/core/Card';
 import MuiCardContent from '@material-ui/core/CardContent';
@@ -26,18 +27,12 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import Rating from '@material-ui/lab/Rating';
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
 import Slide from '@material-ui/core/Slide';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import { makeStyles } from '@material-ui/core/styles';
-const StyledRating = withStyles({
-    iconFilled: {
-        color: '#ff6d75',
-    },
-    iconHover: {
-        color: '#ff3d47',
-    },
-})(Rating);
-const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props} />;
-});
 const useStyles = makeStyles((theme) => ({
     gridContainer: {
         display: 'flex',
@@ -104,8 +99,28 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
         alignItems: 'stretch',
     },
+    paper: {
+        padding: theme.spacing(0),
+        //color: theme.palette.text.secondary,
+    },
+    feedbackRating: {
+        display: 'flex',
+        alignItems: 'center',
+        width: '200px',
+    },
 }));
-export default function Index({counterValue}) {
+const StyledRating = withStyles({
+    iconFilled: {
+        color: '#ff6d75',
+    },
+    iconHover: {
+        color: '#ff3d47',
+    },
+})(Rating);
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
+export default function Index(props) {
     const classes = useStyles();
     return (
         <Layout>
@@ -116,10 +131,10 @@ export default function Index({counterValue}) {
                 <MuiGrid item sm={4} xs={12}>
                     <MuiGrid container spacing={1} direction="column">
                         <MuiGrid item xs={12}>
-                            <Ringer counterValue={counterValue}/>
+                            <Ringer ringerCount={props.ringerCount}/>
                         </MuiGrid>
                         <MuiGrid item xs={12}>
-                            <Feedback/>
+                            <Feedback counts={props.feedbackCounts}/>
                         </MuiGrid>
                     </MuiGrid>
                 </MuiGrid>
@@ -141,7 +156,7 @@ export function Hi() {
             headers: { 'Content-Type': 'text/event-stream' },
             body: JSON.stringify({
                 'name': name,
-                'dob':selectedDate,
+                'dob': selectedDate,
                 'message': hiMessage,
                 'contact': contact,
             })
@@ -315,7 +330,7 @@ export function Hi() {
     );
 }
 export function Ringer(props) {
-    const [counter, setCounter] = useState(props.counterValue);
+    const [counter, setCounter] = useState(props.ringerCount);
     const [increment, setIncrement] = useState(0);
     const classes = useStyles();
     useEffect(() => {
@@ -367,8 +382,27 @@ export function Ringer(props) {
         </MuiContainer>
     );
 }
-export function Feedback() {
+export function Feedback(props) {
     const classes = useStyles();
+    const labels = {
+        1: 'Useless',
+        2: 'Poor',
+        3: 'Ok',
+        4: 'Good',
+        5: 'Excellent',
+    };
+    const [value, setValue] = useState(2);
+    const [hover, setHover] = useState(-1);
+    const handleFeedbackChange = (event, newValue) => {
+        const requestOptions = {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({'increment': 1})
+        };
+        fetch('https://wu9tlfqaf8.execute-api.ap-south-1.amazonaws.com/prod/counter/2-frontpage-feedback-' + newValue,
+            requestOptions);
+        setValue(newValue);
+    }
     return (
         <MuiContainer className={classes.right}>
             <MuiCard variant="outlined">
@@ -376,18 +410,19 @@ export function Feedback() {
                     <MuiTypography className={classes.typography} variant="h2" gutterBottom>
                         feedback
                     </MuiTypography>
-                    <MuiBox component="fieldset" mb={3} borderColor="transparent">
+                    <MuiBox className={classes.feedbackRating} component="fieldset" mb={2} borderColor="transparent">
                         <StyledRating
                             name="customized-color"
                             defaultValue={2}
                             getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
                             precision={1}
                             icon={<FavoriteIcon fontSize="inherit" />}
+                            onChange={handleFeedbackChange}
+                            onChangeActive={(event, newHover) => {setHover(newHover);}}
                         />
+                        {value !== null && <Box display="inline" ml={2}>{labels[hover !== -1 ? hover : value]}</Box>}
                     </MuiBox>
-                    <MuiTypography>
-                        <strong>Coming soon!</strong> Transparent stats on the cardinality of 1, 2, 3, 4, and 5 hearts overtime. Dummy placeholder for now.
-                    </MuiTypography>
+                    <FeedbackList counts={props.counts}/>
                 </MuiCardContent>
                 <MuiCardActions disableSpacing>
                 </MuiCardActions>
@@ -395,10 +430,92 @@ export function Feedback() {
         </MuiContainer>
     );
 }
+export function FeedbackList(props) {
+    const [feedbackCounts, setFeedbackCounts] = useState(props.counts);
+    const classes = useStyles();
+    const feedbackColOne = feedbackCounts.slice(0, 3);
+    const feedbackColTwo = feedbackCounts.slice(3, 5);
+    return(
+    <div>
+        <Grid container spacing={1} disablePadding >
+            <Grid item xs={12} sm={6}>
+                <Paper className={classes.paper}>
+                    {feedbackColOne.map((value,index) => (
+                        <ListItem button key={index+1} dense>
+                            <ListItemText>
+                                 <StyledRating
+                                     name="customized-color"
+                                     defaultValue={index+1}
+                                     getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
+                                     precision={1}
+                                     readOnly
+                                     disablePadding
+                                     size="small"
+                                     icon={<FavoriteIcon fontSize="inherit" />}
+                                 />
+                                 <ListItemSecondaryAction>
+                                     <MuiTypography>
+                                        {value}
+                                     </MuiTypography>
+                                 </ListItemSecondaryAction>
+                             </ListItemText>
+                        </ListItem>
+                    ))}
+                </Paper>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+                <Paper className={classes.paper}>
+                    {feedbackColTwo.map((value , index)=> (
+                        <ListItem button key={index + 4} dense>
+                            <ListItemText>
+                                 <StyledRating
+                                     name="customized-color"
+                                     defaultValue={index + 4}
+                                     getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
+                                     precision={1}
+                                     readOnly
+                                     disablePadding
+                                     size="small"
+                                     icon={<FavoriteIcon fontSize="inherit" />}
+                                 />
+                                 <ListItemSecondaryAction>
+                                     <MuiTypography>
+                                        {value}
+                                     </MuiTypography>
+                                 </ListItemSecondaryAction>
+                             </ListItemText>
+                        </ListItem>
+                    ))}
+                </Paper>
+            </Grid>
+        </Grid>
+    </div>
+);
+}
 export async function getServerSideProps(context) {
-    const res = await fetch('https://wu9tlfqaf8.execute-api.ap-south-1.amazonaws.com/prod/counter/1-frontpage-ringer');
-    const counterValue = await res.json();
+    const requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    };
+    let res = await fetch('https://wu9tlfqaf8.execute-api.ap-south-1.amazonaws.com/prod/counter/1-frontpage-ringer', requestOptions);
+    const ringerCount = await res.json();
+    let feedbackCounts = [];
+    res = await fetch("https://wu9tlfqaf8.execute-api.ap-south-1.amazonaws.com/prod/counter/2-frontpage-feedback-1", requestOptions);
+    const feedbackOneStar = await res.json();
+    feedbackCounts.push(feedbackOneStar);
+    res = await fetch("https://wu9tlfqaf8.execute-api.ap-south-1.amazonaws.com/prod/counter/2-frontpage-feedback-2", requestOptions);
+    const feedbackTwoStar = await res.json();
+    feedbackCounts.push(feedbackTwoStar);
+    res = await fetch("https://wu9tlfqaf8.execute-api.ap-south-1.amazonaws.com/prod/counter/2-frontpage-feedback-3", requestOptions);
+    const feedbackThreeStar = await res.json();
+    feedbackCounts.push(feedbackThreeStar);
+    res = await fetch("https://wu9tlfqaf8.execute-api.ap-south-1.amazonaws.com/prod/counter/2-frontpage-feedback-4", requestOptions);
+    const feedbackFourStar = await res.json();
+    feedbackCounts.push(feedbackFourStar);
+    res = await fetch("https://wu9tlfqaf8.execute-api.ap-south-1.amazonaws.com/prod/counter/2-frontpage-feedback-5", requestOptions);
+    const feedbackFiveStar = await res.json();
+    feedbackCounts.push(feedbackFiveStar);
     return {
-        props: {counterValue},
+        props: {ringerCount, feedbackCounts}
     }
 }
