@@ -158,7 +158,7 @@ export function Hi() {
         let searchStrings = name.split(" ");
         let newAlertMessage = "";
         searchStrings.forEach((onestr) => {
-            // search value in all above guys, and present prepare alert message.
+            // search value in all above guys, and prepare alert message.
             let str = onestr.toLowerCase();
             if(newAlertMessage === "" || newAlertMessage === "Thank you for checking in!") {
                 if(asliGochiz.includes(str)) {
@@ -212,11 +212,12 @@ export function Hi() {
                         <MuiBox className={classes.subtitle} >
                             <MuiTextField
                                 id="input-hi"
-                                label="how are you doing? got a word for me? leave a message when you go :D"
+                                label="how's your din? suggestions/thoughts/rants? leave a message when you go :D"
                                 variant="outlined"
                                 size="small"
                                 multiline
                                 rowsMax={3}
+                                rows={2}
                                 fullWidth
                                 value={hiMessage}
                                 onChange={(event) => setHiMessage(event.target.value)}
@@ -269,7 +270,7 @@ export function Hi() {
                             </MuiPickersUtilsProvider>
                             <MuiTextField
                                 id="input-contact"
-                                label="(Optional) e-mail/whatsapp/insta"
+                                label="(optional) e-mail/whatsapp"
                                 variant="outlined"
                                 size="small"
                                 value={contact}
@@ -327,17 +328,15 @@ export function Ringer(props) {
             .then(result => setCounter(result));
     }, []); // runs once because 0 dependencies mentioned explicitly.
     useEffect(() => {
-        if(increment % 3 === 0) {
-            const requestOptions = {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({'increment': increment})
-            };
-            fetch('https://wu9tlfqaf8.execute-api.ap-south-1.amazonaws.com/prod/counter/1-frontpage-ringer',
-                requestOptions)
-                .then(setCounter(counter + increment))
-                .then(setIncrement(0));
-        }
+        const requestOptions = {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({'increment': increment})
+        };
+        fetch('https://wu9tlfqaf8.execute-api.ap-south-1.amazonaws.com/prod/counter/1-frontpage-ringer',
+            requestOptions)
+            .then(setCounter(counter + increment))
+            .then(setIncrement(0));
     }, [increment]);
     return (
         <MuiContainer className={classes.right}>
